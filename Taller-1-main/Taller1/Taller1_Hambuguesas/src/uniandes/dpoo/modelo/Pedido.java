@@ -23,6 +23,28 @@ public class Pedido {
 	
 	
 	// Métodos
+
+	@Override public boolean equals(Object object) {
+		boolean respuesta = true;
+		
+		if (object instanceof Pedido) {
+			Pedido objeto = (Pedido) object;
+			for(Producto producto1: objeto.getItemsPedido() ) {
+				for(Producto producto2: this.getItemsPedido()) {
+					if (!producto2.getNombre().equals(producto1.getNombre())) {
+						respuesta = false;
+						break;
+					}
+				}
+			}
+		}
+		else {
+			respuesta = false;
+		}
+		
+		return respuesta;
+	}
+	
 	
 	public String guardarFactura() {
 		return generarTextoFactura();

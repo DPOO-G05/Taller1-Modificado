@@ -91,8 +91,16 @@ public class Restaurante {
 	
 	
 	public String cerrarYGuardarPedido() {
+		boolean respuesta = false;
+		for(Pedido pedido: this.pedidos) {
+			if (this.pedidoEnCurso.equals(pedido)) {
+				respuesta = true;
+			}
+		}
+		String iguales = respuesta ? "\nSi hay un pedido igual": "\nNo hay un pedido igual";
 		this.pedidos.add(this.pedidoEnCurso);
-		return this.pedidoEnCurso.guardarFactura();
+
+		return this.pedidoEnCurso.guardarFactura() + iguales;
 	}
 	
 	public void cargarInformacionRestaurante(String rutaIngredientes, String rutaMenu, String rutaCombos, String rutaBebidas) {
