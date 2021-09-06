@@ -1,0 +1,12 @@
+Informacion de metodos complementarios en la clase Restaurante del Taller 1
+
+Clase Restaurante
++getCombos():ArrayList<Combo>
++consultarPedido(int id):Pedido
+ 
+// Metodos para poder agregar un producto al pedido actual.
+-buscarCombo(String nombre): Combo
+-buscarProductoMenu(String nombre): ProductoMenu
+-buscarIngrediente(String nombre): Ingrediente
+ 
+
