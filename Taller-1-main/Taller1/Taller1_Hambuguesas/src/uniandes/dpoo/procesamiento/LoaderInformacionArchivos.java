@@ -31,7 +31,7 @@ public class LoaderInformacionArchivos {
 			// Separar los valores que estan en la linea por el caracter ';'
 			String[] partes = linea.split(";");
 			
-			ProductoMenu nuevoProducto = new ProductoMenu(partes[0], Integer.parseInt(partes[1]));   // Creacion de un objeto ProductoMenu con su nombre y precio base
+			ProductoMenu nuevoProducto = new ProductoMenu(partes[0], Integer.parseInt(partes[1]), Integer.parseInt(partes[2]));   // Creacion de un objeto ProductoMenu con su nombre y precio base
 			productosMenu.add( nuevoProducto );
 
 			linea = br.readLine(); // leer la proxima linea en el archivo con un nuevo ProductoMenu 
@@ -52,7 +52,7 @@ public class LoaderInformacionArchivos {
 		{
 			// Separar los valores que estan en la linea por el caracter ';'
 			String[] partes = linea.split(";");
-			Ingrediente nuevoIngrediente = new Ingrediente(partes[0], Integer.parseInt(partes[1]));   // Creacion de un objeto ProductoMenu con su nombre y precio base
+			Ingrediente nuevoIngrediente = new Ingrediente(partes[0], Integer.parseInt(partes[1]),Integer.parseInt(partes[2]));   // Creacion de un objeto ProductoMenu con su nombre y precio base
 			ingredientes.add(nuevoIngrediente);
 			linea = br.readLine(); // leer la proxima linea en el archivo con un nuevo ProductoMenu 
 		}
@@ -102,7 +102,6 @@ public class LoaderInformacionArchivos {
 					}
 					
 				}
-				                                          // MEJORA: Buscar y agregar el ProductoMenu con el nombre en la lista productosMenu (parametro)
 			}
 
 			combos.add( nuevoCombo );

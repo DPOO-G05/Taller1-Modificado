@@ -6,6 +6,7 @@ public class ProductoAjustado implements Producto {
 
 	private ProductoMenu base;
 	private int precio;
+	private int calorias;
 	private ArrayList<Ingrediente> agregados;
 	private ArrayList<Ingrediente> eliminados;
 
@@ -13,6 +14,7 @@ public class ProductoAjustado implements Producto {
 	public ProductoAjustado(ProductoMenu base) {
 		this.base = base;
 		this.precio = base.getPrecio();
+		this.calorias = base.getCalorias();
 		this.agregados = new ArrayList<Ingrediente>();
 		this.eliminados = new ArrayList<Ingrediente>();
 	}
@@ -66,6 +68,7 @@ public class ProductoAjustado implements Producto {
 		// TODO Auto-generated method stub
 		String base = getNombre();
 		String texto = "Producto: " + base + "\n\t\tPrecio: " + String.valueOf(this.precio) + "\n\t\tIVA: " + String.format("%.2f\n", this.precio* 0.19 );
+		texto += String.format("\n\t\tCalorias: %d\n", getCalorias());
 		return texto;
 
 	}
@@ -81,6 +84,7 @@ public class ProductoAjustado implements Producto {
 				
 				ingrediente = ingredientes.get(Integer.parseInt(array[1]) - 1);
 				precio += ingrediente.getCostoAdicional();
+				calorias += ingrediente.getCalorias();
 				this.agregados.add(ingrediente);
 
 				
@@ -88,6 +92,7 @@ public class ProductoAjustado implements Producto {
 			else if (array[0].equals((String) "-")) {
 
 				ingrediente = ingredientes.get(Integer.parseInt(array[1]) - 1);
+				calorias -= ingrediente.getCalorias();
 				this.eliminados.add(ingrediente);
 			}
 			
@@ -97,6 +102,12 @@ public class ProductoAjustado implements Producto {
 		}
 		
 		
+	}
+
+
+	@Override
+	public int getCalorias() {
+		return calorias;
 	}
 	
 	

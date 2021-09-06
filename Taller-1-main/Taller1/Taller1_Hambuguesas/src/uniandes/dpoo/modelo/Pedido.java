@@ -35,7 +35,7 @@ public class Pedido {
 		int IVA = getPrecioIVAPedido();
 		int neto = getPrecioNetoPedido();
 		int total = getPrecioTotalPedido();
-		
+		int calorias = getCalorias();
 		String cuerpo = "";
 		
 		for (Producto producto: itemsPedido) {
@@ -43,7 +43,7 @@ public class Pedido {
 		}
 		
 		
-		String factura = String.format("%s\n\t%s\n%s%s\nTOTAL: %d\tNETO: %d\tIVA: %d", header, "FACTURA", cuerpo, header,total,neto,IVA); 
+		String factura = String.format("%s\n\t%s\n%s%s\nCALORIAS: %d\tTOTAL: %d\tNETO: %d\tIVA: %d", header, "FACTURA", cuerpo, header,calorias,total,neto,IVA); 
 		return factura; 
 	}
 	
@@ -113,6 +113,14 @@ public class Pedido {
 	
 	private int getPrecioIVAPedido() {
 		return (int) (getPrecioNetoPedido() * 0.19);
+	}
+	
+	private int getCalorias() {
+		int calorias = 0;
+		for(Producto producto: this.itemsPedido) {
+			calorias += producto.getCalorias();
+		}
+		return calorias;
 	}
 
 	

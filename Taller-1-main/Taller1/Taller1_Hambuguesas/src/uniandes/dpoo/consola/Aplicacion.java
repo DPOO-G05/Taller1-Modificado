@@ -33,14 +33,15 @@ public class Aplicacion {
 			System.out.println("\nMenu:");
 			System.out.println("1: Cargar Informacion");
 			System.out.println("2: Iniciar Pedido");
-			System.out.println("3: Agregar Producto");
-			System.out.println("4: Agregar Combo");
-			System.out.println("5: Verificar Estado Pedido");
-			System.out.println("6: Terminar Pedido");
-			System.out.println("7: Salir");
+			System.out.println("3: Agregar Bebida");
+			System.out.println("4: Agregar Producto");
+			System.out.println("5: Agregar Combo");
+			System.out.println("6: Verificar Estado Pedido");
+			System.out.println("7: Terminar Pedido");
+			System.out.println("8: Salir");
 			int opcionSeleccionada = Integer.parseInt(input("Ingrese la opción deseada"));
 			ejecutarOpcion(opcionSeleccionada);
-			if (opcionSeleccionada == 7) {
+			if (opcionSeleccionada == 8) {
 				continuar = false;
 			}
 		}
@@ -138,17 +139,38 @@ public class Aplicacion {
 		System.out.println(this.restaurante.cerrarYGuardarPedido());
 	}
 	
+
+	
+	private void cargarInformacion() {
+
+		String fileIngredientes = "./data/ingredientes.txt";
+		String fileMenu = "./data/menu.txt";
+		String fileCombos = "./data/combos.txt";
+		String fileBebidas = "./data/bebidas.txt";
+		this.restaurante.cargarInformacionRestaurante(fileIngredientes,fileMenu , fileCombos, fileBebidas);
+
+	}
+
+	private void mostrarMenuBebidas() {
+
+		ArrayList<ProductoMenu> bebidas = this.restaurante.getBebidas();
+		System.out.println("Seleccione la bebida que desea agregar ");
+		for (int i = 0; i < bebidas.size(); i++) {
+			ProductoMenu bebida = bebidas.get(i);
+			System.out.printf("%d\t%s\n", i + 1, bebida.getNombre());
+		}
+		
+		int posicion = Integer.parseInt(input("Numero")) - 1;
+		
+		this.restaurante.getPedidoEnCurso().agregarProducto((Producto) bebidas.get(posicion));
+	}
 	
 	public void ejecutarOpcion(int opcionSeleccionada) {
-		// TODO: IMPLEMENTAR
 	
 		int o = opcionSeleccionada;
 		switch (o) {
 			case 1:
-				String fileIngredientes = "./data/ingredientes.txt";
-				String fileMenu = "./data/menu.txt";
-				String fileCombos = "./data/combos.txt";
-				this.restaurante.cargarInformacionRestaurante(fileIngredientes,fileMenu , fileCombos);
+				cargarInformacion();
 				break;
 
 			case 2:
@@ -156,22 +178,25 @@ public class Aplicacion {
 				String direccion = input("Ingrese su dirección");
 				this.restaurante.iniciarPedido(nombreCliente.trim().toLowerCase(), direccion.trim().toLowerCase());
 				break;
-
 			case 3:
-				mostrarMenuBase();
+				mostrarMenuBebidas();
 				mostrarEstadoPedido();
 				break;
 			case 4:
-				mostrarMenuCombos();
+				mostrarMenuBase();
 				mostrarEstadoPedido();
 				break;
 			case 5:
+				mostrarMenuCombos();
 				mostrarEstadoPedido();
 				break;
 			case 6:
-				cerrarYFacturar();
+				mostrarEstadoPedido();
 				break;
 			case 7:
+				cerrarYFacturar();
+				break;
+			case 8:
 				System.out.println("Gracias por tu compra!");
 				break;
 		}
@@ -208,7 +233,6 @@ public class Aplicacion {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println("Inicio de ejecuci�n de la aplicaci�n");
 		
 		Restaurante restaurante = new Restaurante();

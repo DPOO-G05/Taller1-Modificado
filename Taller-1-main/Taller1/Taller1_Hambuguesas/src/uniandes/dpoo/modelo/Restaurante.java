@@ -14,6 +14,7 @@ public class Restaurante {
 
 	private ArrayList<Ingrediente> ingredientes;
 	private ArrayList<ProductoMenu> menuBase;
+	private ArrayList<ProductoMenu> bebidas;
 	private Pedido pedidoEnCurso;
 	private ArrayList<Pedido> pedidos;
 	private ArrayList<Combo> combos;
@@ -23,9 +24,17 @@ public class Restaurante {
 	}
 
 	//Getters y Setters
-	
-		public ArrayList<Ingrediente> getIngredientes() {
+
+	public ArrayList<Ingrediente> getIngredientes() {
 		return ingredientes;
+	}
+
+	public ArrayList<ProductoMenu> getBebidas() {
+		return bebidas;
+	}
+
+	public void setBebidas(ArrayList<ProductoMenu> bebidas) {
+		this.bebidas = bebidas;
 	}
 
 	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
@@ -86,10 +95,10 @@ public class Restaurante {
 		return this.pedidoEnCurso.guardarFactura();
 	}
 	
-	public void cargarInformacionRestaurante(String rutaIngredientes, String rutaMenu, String rutaCombos) {
+	public void cargarInformacionRestaurante(String rutaIngredientes, String rutaMenu, String rutaCombos, String rutaBebidas) {
 		
-	
 		cargarMenu(rutaMenu);
+		cargarBebidas(rutaBebidas);
 		cargarIngredientes(rutaIngredientes);
 		cargarCombos(rutaCombos);
 		
@@ -117,7 +126,7 @@ public class Restaurante {
 		try
 		{
 			ingredientes = LoaderInformacionArchivos.leerInfoArchivoIngredientes(rutaIngredientes);
-			System.out.println("OK Se carg� el archivo " + rutaIngredientes + " con informaci�n de los Productos Menu.");
+			System.out.println("OK Se carg� el archivo " + rutaIngredientes + " con informaci�n de los Ingredientes.");
 			this.ingredientes = ingredientes;
 			
 			for (Ingrediente ingrediente: this.ingredientes) {
@@ -180,7 +189,14 @@ public class Restaurante {
 		ArrayList<Combo> combos = new ArrayList<Combo>();
 		try
 		{
-			combos = LoaderInformacionArchivos.leerInfoArchivoCombos(rutaCombos, getMenuBase());
+			ArrayList<ProductoMenu> temp = new ArrayList<>();
+			for(ProductoMenu producto: getMenuBase()) {
+				temp.add(producto);
+			}
+
+			temp.addAll(bebidas);
+
+			combos = LoaderInformacionArchivos.leerInfoArchivoCombos(rutaCombos, temp);
 			this.combos = combos;
 			System.out.println("OK Se carg� el archivo " + rutaCombos + " con informaci�n de los Combos.");
 			
@@ -201,6 +217,32 @@ public class Restaurante {
 		}
 
 	}
+	
+	private void cargarBebidas(String rutaBebidas) {
+		ArrayList<ProductoMenu> bebidas = new ArrayList<>();
+		
+		try
+		{
+			bebidas = LoaderInformacionArchivos.leerInfoArchivoProductosMenu(rutaBebidas);
+			this.bebidas = bebidas;
+			System.out.println("OK Se cargo el archivo " + rutaBebidas + " con informaci�n de las bebidas.");
+
+			
+			for (ProductoMenu bebida: this.bebidas) {
+				System.out.printf("%s", bebida.getNombre());
+			}
+	
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Combo implements Producto {
 	private String nombreCombo;
+	private int calorias;
 	private int precio;
 	private double descuento;
 	private ArrayList<ProductoMenu> itemsCombo;    // SIMPLIFICACION: Lista de nombres de los productos del menu que componen el combo. Revisar el diagrama de clases
@@ -16,9 +17,27 @@ public class Combo implements Producto {
 		this.nombreCombo = nombreP;
 		this.descuento = descuentoP;
 		this.itemsCombo = new ArrayList<ProductoMenu>();    
+
 	}
 	
-	// TODO: COMPLETAR EL CALCULO DEL PRECIO  
+
+	private void calcularCalorias() {
+		for (ProductoMenu producto: itemsCombo) {
+			calorias += producto.getCalorias();
+		}
+
+	}
+	
+	public int getCalorias() {
+		calcularCalorias();
+		return calorias;
+	}
+
+
+	public void setCalorias(int calorias) {
+		this.calorias = calorias;
+	}
+
 
 	public String getNombreCombo() {
 		return nombreCombo;
@@ -90,6 +109,7 @@ public class Combo implements Producto {
 	public String generarTextoFactura() {
 		String base = getNombre();
 		String texto = "Producto: " + base + "\n\t\tPrecio: " + String.valueOf(this.precio) + "\n\t\tIVA: " + String.format("%.2f\n", this.precio * 0.19 );
+		texto += String.format("\n\t\tCalorias: %d\n", getCalorias());
 		return texto;
 	}
 	

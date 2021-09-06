@@ -4,10 +4,12 @@ package uniandes.dpoo.modelo;
 public class ProductoMenu implements Producto {
 	private String nombre;
 	private int precioBase;
+	private int calorias;
 	
-	public ProductoMenu(String nombreP, int precioP) {
+	public ProductoMenu(String nombreP, int precioP, int calorias) {
 		this.nombre = nombreP;
 		this.precioBase = precioP;
+		this.calorias = calorias;
 	}
 	
 	/**
@@ -33,6 +35,12 @@ public class ProductoMenu implements Producto {
 	public String generarTextoFactura() {
 		String base = getNombre();
 		String texto = "Producto: " + base + "\n\t\tPrecio: " + String.valueOf(this.precioBase) + "\n\t\tIVA: " + String.format("%.2f\n", this.precioBase* 0.19 );
+		texto += String.format("\n\t\tCalorias: %d\n", getCalorias());
 		return texto;
+	}
+
+	@Override
+	public int getCalorias() {
+		return calorias;
 	}
 }
