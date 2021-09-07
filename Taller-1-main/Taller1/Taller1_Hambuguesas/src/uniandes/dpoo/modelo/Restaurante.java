@@ -50,7 +50,15 @@ public class Restaurante {
 	}
 
 	public Pedido getPedidoEnCurso() {
-		return pedidoEnCurso;
+
+		if (this.pedidoEnCurso != null) {
+
+			return pedidoEnCurso;
+
+		}
+		else {
+			throw new NullPointerException("Debe iniciar un pedido antes de consultarlo!");
+		}
 	}
 
 	public void setPedidoEnCurso(Pedido pedidoEnCurso) {
@@ -115,10 +123,23 @@ public class Restaurante {
 	
 	public Pedido consultarPedido(int id) {
 		Pedido respuesta = null;
-		for (Pedido pedido: this.pedidos) {
-			if (pedido.getIdPedido() == id){
-				respuesta = pedido;
+		if (this.pedidos != null){
+
+			for (Pedido pedido: this.pedidos) {
+
+				if (pedido.getIdPedido() == id){
+					respuesta = pedido;
+					break;
+				}
 			}
+		
+		if(respuesta == null) {
+			throw new RuntimeException("No existe ningún pedido con ese ID");
+		}
+	}
+	
+		else {
+			throw new NullPointerException("Debe inicializar la lista de pedidos");
 		}
 		
 		return respuesta;
